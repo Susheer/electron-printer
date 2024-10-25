@@ -6,14 +6,6 @@ NAN_MODULE_INIT(Init) {
 // only for node
     MY_MODULE_SET_METHOD(target, "getPrinters", getPrinters);
     MY_MODULE_SET_METHOD(target, "getDefaultPrinterName", getDefaultPrinterName);
-    MY_MODULE_SET_METHOD(target, "getPrinter", getPrinter);
-    MY_MODULE_SET_METHOD(target, "getPrinterDriverOptions", getPrinterDriverOptions);
-    MY_MODULE_SET_METHOD(target, "getJob", getJob);
-    MY_MODULE_SET_METHOD(target, "setJob", setJob);
-    MY_MODULE_SET_METHOD(target, "printDirect", PrintDirect);
-    MY_MODULE_SET_METHOD(target, "printFile", PrintFile);
-    MY_MODULE_SET_METHOD(target, "getSupportedPrintFormats", getSupportedPrintFormats);
-    MY_MODULE_SET_METHOD(target, "getSupportedJobCommands", getSupportedJobCommands);
 }
 
 #if NODE_MAJOR_VERSION >= 10
