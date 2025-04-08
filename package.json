@@ -2,7 +2,7 @@
   "name": "@thesusheer/electron-printer",
   "description": "Node API (N-API) supported electron.s || node.js printer bindings",
   "homepage": "https://github.com/Susheer/electron-printer",
-  "version": "2.0.2",
+  "version": "2.0.4",
   "main": "./lib/index.js",
   "types": "types/index.d.ts",
   "dependencies": {
@@ -11,11 +11,11 @@
   "scripts": {
     "install": "prebuild-install || node-gyp rebuild",
     "rebuild": "node-gyp rebuild",
-    "prepublishOnly": "grunt release",
+    "release": "node-pre-gyp-github publish --release --commitish main",
     "electron-rebuild": "node-gyp rebuild --target_platform=win32 --target_arch=x64  --runtime=electron --target=32.2.0 --dist-url=https://electronjs.org/headers",
     "test": "node --test test/"
   },
-  "gypfile": false,
+
   "author": {
     "name": "Ion Lupascu",
     "url": "http://program-support.co.uk/",
@@ -31,10 +31,11 @@
     "url": "https://github.com/Susheer/electron-printer.git"
   },
   "binary": {
-    "module_name": "electron_printer",
+    "module_name": "electron-printer",
     "module_path": "./lib/",
     "host": "https://github.com/Susheer/electron-printer/releases/download/",
-    "remote_path": "v{version}"
+    "remote_path": "v{version}",
+    "tag_path": "https://github.com/Susheer/electron-printer/releases/tag/v{version}"
   },
   "licenses": [
     {
@@ -42,12 +43,12 @@
     }
   ],
   "devDependencies": {
+    "@mapbox/node-pre-gyp": "^2.0.0",
     "grunt": "^1.6.1",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-jshint": "^3.2.0",
     "grunt-node-gyp": "^5.0.0",
     "grunt-shell": "^4.0.0",
-    "node-pre-gyp": "^0.17.0",
     "node-pre-gyp-github": "github:Susheer/node-pre-gyp-github"
   }
 }

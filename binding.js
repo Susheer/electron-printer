@@ -4,9 +4,9 @@ let addon = {}, binary_path;
 switch (os.platform()) {
     case 'win32':
         if (os.arch() === 'ia32') {
-            binary_path = path.join(__dirname, 'electron_printer_win32_ia32.node');
+            binary_path = path.join(__dirname, 'electron-printer-win32-ia32.node');
         } else if (os.arch() === 'x64') {
-            binary_path = path.join(__dirname, 'electron_printer_win32_x64.node');
+            binary_path = path.join(__dirname, 'electron-printer-win32-x64.node');
         }
         addon = require(binary_path);
         break;

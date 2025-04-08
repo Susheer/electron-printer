@@ -20,14 +20,14 @@ module.exports = function(grunt) {
         copy: {
             ia32: {
                 files: [
-                    {src: 'build/Release/electron_printer.node', dest: 'lib/electron_printer_' + process.platform + '_ia32.node'},
+                    {src: 'build/Release/electron-printer.node', dest: 'lib/electron-printer-' + process.platform + '-ia32.node'},
                     {src: 'binding.js', dest: 'lib/binding.js'},
                     {src: 'index.js', dest: 'lib/index.js'}
                 ]
             },
             x64: {
                 files: [
-                    {src: 'build/Release/electron_printer.node', dest: 'lib/electron_printer_' + process.platform + '_x64.node'},
+                    {src: 'build/Release/electron-printer.node', dest: 'lib/electron-printer-' + process.platform + '-x64.node'},
                     {src: 'binding.js', dest: 'lib/binding.js'},
                     {src: 'index.js', dest: 'lib/index.js'}
                 ]
