@@ -1,18 +1,36 @@
 module.exports = function(grunt) {
+    const versions = {
+        ia32: [
+            "23.11.0",
+            "22.14.0",
+            "21.7.3",
+            "20.19.0",
+            "19.9.0",
+            "18.20.8"
+        ],
+        x64: [
+            "23.11.0",
+            "22.14.0",
+            "21.7.3",
+            "20.19.0",
+            "19.9.0",
+            "18.20.8"
+        ],
+    }
+    const target_arch = ["ia32","x64"];
+    const shell = {};
+    
+    target_arch.forEach((arch) => {
+        versions[arch].forEach(version => {
+            shell[`node-pre-gyp-${arch}-v${version+""}`] = {
+                command: `node-pre-gyp configure build package --target_arch=${arch} --target=${version}`
+            };
+        });
+    });
+
     grunt.initConfig({
         shell: {
-            'node-pre-gyp-ia32': {
-                command: 'node-pre-gyp configure build package --target_arch=ia32'
-            },
-            'node-pre-gyp-x64': {
-                command: 'node-pre-gyp configure build package --target_arch=x64'
-            },
-            'node-gyp-ia32': {
-                command: 'node-gyp rebuild --arch=ia32'
-            },
-            'node-gyp-x64': {
-                command: 'node-gyp rebuild --arch=x64'
-            },
+            ...shell,
             'upload-binaries': {
                 command: 'node-pre-gyp-github publish'
             }
@@ -40,18 +58,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
 
     grunt.registerTask('build-pre-ia32', [
-        'shell:node-pre-gyp-ia32',
+        versions['ia32'].map((ver)=>`shell:node-pre-gyp-ia32-v${ver}`),
         'copy:ia32'
-    ]);
-
-    grunt.registerTask('build-ia32', [
-        'shell:node-gyp-ia32',
-        'copy:ia32'
-    ]);
-
-    grunt.registerTask('build-x64', [
-        'shell:node-gyp-x64',
-        'copy:x64'
     ]);
 
     grunt.registerTask('build-pre-x64', [
@@ -59,13 +67,8 @@ module.exports = function(grunt) {
         'copy:x64'
     ]);
 
-    grunt.registerTask('build', [
-        'build-ia32',
-        'build-x64'
-    ]);
-
     grunt.registerTask('build-pre', [
-        'build-pre-ia32',
+        ...versions['x64'].map((ver)=>`shell:node-pre-gyp-x64-v${ver}`),
         'build-pre-x64'
     ]);
 
