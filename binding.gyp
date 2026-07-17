@@ -8,6 +8,10 @@
       "target_name": "action_after_build",
       "type": "none",
       "dependencies": [ "<(module_name)" ],
+      "defines": [
+        "NAPI_VERSION=8",
+        'NAPI_CPP_EXCEPTIONS'
+      ],
       "copies": [
         {
           "files": [ "<(PRODUCT_DIR)/<(module_name).node" ],
