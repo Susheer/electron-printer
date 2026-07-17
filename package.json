@@ -2,18 +2,20 @@
   "name": "@thesusheer/electron-printer",
   "description": "Node API (N-API) supported electron.s || node.js printer bindings",
   "homepage": "https://github.com/Susheer/electron-printer",
-  "version": "2.0.4",
+  "version": "3.1.0",
   "main": "./lib/index.js",
   "types": "types/index.d.ts",
   "dependencies": {
-    "node-addon-api": "^8.1.0"
+    "node-addon-api": "^8.1.0",
+    "prebuild-install": "^7.1.3"
   },
   "scripts": {
-    "install": "prebuild-install || node-gyp rebuild",
+    "install": "prebuild-install",
     "rebuild": "node-gyp rebuild",
     "release": "node-pre-gyp-github publish --release --commitish main",
     "electron-rebuild": "node-gyp rebuild --target_platform=win32 --target_arch=x64  --runtime=electron --target=32.2.0 --dist-url=https://electronjs.org/headers",
-    "test": "node --test test/"
+    "test": "node --test test/",
+    "grunt:release":"grunt release"
   },
 
   "author": {
@@ -30,17 +32,23 @@
     "type": "git",
     "url": "https://github.com/Susheer/electron-printer.git"
   },
-  "binary": {
-    "module_name": "electron-printer",
-    "module_path": "./lib/",
-    "host": "https://github.com/Susheer/electron-printer/releases/download/",
-    "remote_path": "v{version}",
-    "tag_path": "https://github.com/Susheer/electron-printer/releases/tag/v{version}"
-  },
-  "licenses": [
+"binary": {
+  "module_name": "electron-printer",
+  "module_path": "./lib/",
+  "host": "https://github.com/Susheer/electron-printer/releases/download/",
+  "remote_path": "v{version}",
+  "tag_path": "https://github.com/Susheer/electron-printer/releases/tag/v{version}"
+},
+"licenses": [
     {
       "type": "BSD"
     }
+  ],
+  "files": [
+    "lib/**/*",
+    "types/**/*",
+    "README.md",
+    "LICENSE"
   ],
   "devDependencies": {
     "@mapbox/node-pre-gyp": "^2.0.0",
