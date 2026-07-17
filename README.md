@@ -4,7 +4,17 @@
 
 Native bind printers on POSIX and Windows OS from Node.js, Electron, and node-webkit.
 
-!npm version !Prebuild Binaries and Publish
+## Runtime Compatibility
+
+This package distributes N-API binaries.
+
+The same binary can be used across supported versions of:
+
+- Node.js
+- Electron
+- NW.js
+
+without recompilation, provided the runtime supports the targeted N-API version.
 
 > Supports Node.js versions from 8.0.0 onwards, including the latest versions, thanks to the transition to N-API.
 
