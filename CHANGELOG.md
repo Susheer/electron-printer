@@ -7,6 +7,8 @@ and this project adheres to Semantic Versioning.
 
 ---
 ## 3.1.0
-- Restricted npm package distribution to runtime JS files and prebuilt binaries.
-- Removed native source code and build assets from npm bundle.
-- Added DISTRIBUTION-POLICY.md to explain the change and guide forks.
+- remove node-gyp fallback from the install script
+- limit published package contents using the files field
+- add grunt release helper script
+- prepare package metadata for prebuilt binary distribution
+- bump package version to 3.1.0
