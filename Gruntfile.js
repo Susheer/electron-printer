@@ -1,4 +1,5 @@
 const pkg = require("./package.json");
+const buildMatrix = pkg.buildMatrix.platforms;
 module.exports = function(grunt) {
     grunt.initConfig({
         shell: {
