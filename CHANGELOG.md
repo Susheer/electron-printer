@@ -6,6 +6,8 @@ The format is based on Keep a Changelog,
 and this project adheres to Semantic Versioning.
 
 ---
+## 4.0.2
+ - fix: Failure loading build files
 ## 3.1.0
 - remove node-gyp fallback from the install script
 - limit published package contents using the files field
