@@ -10,7 +10,7 @@
     "prebuild-install": "^7.1.3"
   },
   "scripts": {
-    "install": "prebuild-install",
+    "install": "prebuild-install --runtime=napi",
     "rebuild": "node-gyp rebuild",
     "release": "node-pre-gyp-github publish --release --commitish main",
     "electron-rebuild": "node-gyp rebuild --target_platform=win32 --target_arch=x64  --runtime=electron --target=32.2.0 --dist-url=https://electronjs.org/headers",
@@ -34,7 +34,7 @@
   },
 "binary": {
   "module_name": "electron-printer",
-  "module_path": "./lib/{napi_build_version}/{platform}/{arch}",
+  "module_path": "./lib/{napi_build_version}/{platform}/{arch}/",
   "host": "https://github.com/Susheer/electron-printer/releases/download/",
   "remote_path": "v{version}",
   "package_name": "{module_name}-v{version}-napi-v{napi_build_version}-{platform}-{arch}.tar.gz",
