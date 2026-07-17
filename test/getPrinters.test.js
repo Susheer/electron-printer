@@ -1,26 +1,18 @@
-const assert = require('assert/strict');
-const { test, beforeEach } = require('node:test');
+const assert = require("assert/strict");
+const test = require("node:test");
 
-let addon;
+const addon = require("../lib");
 
-beforeEach(() => {
-  addon = require('../lib');
+test("getPrinters exists", () => {
+    assert.equal(typeof addon.getPrinters, "function");
 });
 
-test('Ensure getPrinters function exists', (t) => {
-  assert.ok(addon.getPrinters, 'getPrinters function should exist');
-  assert.strictEqual(typeof addon.getPrinters, 'function', 'getPrinters should be a function');
-});
+test("getPrinters returns array", () => {
+    const printers = addon.getPrinters();
 
-test('Ensure getPrinters returns an array', (t) => {
-  const printers = addon.getPrinters();
-  assert.ok(Array.isArray(printers), 'getPrinters should return an array');
-});
+    assert.ok(Array.isArray(printers));
 
-test('Ensure getPrinters handles no printers scenario', (t) => {
-  const printers = addon.getPrinters();
-  assert.ok(Array.isArray(printers), 'getPrinters should return an array');
-  if (printers.length > 0) {
-    assert.strictEqual(typeof printers[0], 'object', 'Each printer should be an object');
-  }
+    printers.forEach(printer => {
+        assert.equal(typeof printer, "object");
+    });
 });
