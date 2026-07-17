@@ -8,8 +8,6 @@ Native bind printers on POSIX and Windows OS from Node.js, Electron, and node-we
 
 > Supports Node.js versions from 8.0.0 onwards, including the latest versions, thanks to the transition to N-API.
 
-> Prebuild and CI integration courtesy of @ekoeryanto in his FORK
-
 If you have a problem, ask a question on !Gitter or find/create a new Github issue
 
 ___
@@ -41,6 +39,14 @@ I was involved in a project where I needed to print from Node.js. This is the re
 ```
 npm install @thesusheer/electron-printer
 ```
+### Distribution Change Notice
+Starting from this version, the npm package distributes only runtime JavaScript
+files and prebuilt binaries. Native C++ source files, build scripts, and other
+development-only artifacts are intentionally excluded to ensure compatibility
+with enterprise security scanners and clean production deployments.
+
+If you need to modify native code, please use the GitHub repository instead of
+node_modules.
 
 ### How to use:
 

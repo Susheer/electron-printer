@@ -1,11 +1,12 @@
+const pkg = require("./package.json");
 module.exports = function(grunt) {
     grunt.initConfig({
         shell: {
             'node-pre-gyp-ia32': {
-                command: 'node-pre-gyp configure build package --target_arch=ia32'
+                command: 'node-pre-gyp configure build package --runtime=electron --target=42.7.0  --dist-url=https://electronjs.org/headers --target_arch=ia32'
             },
             'node-pre-gyp-x64': {
-                command: 'node-pre-gyp configure build package --target_arch=x64'
+                command: 'node-pre-gyp configure build package --runtime=electron --target=42.7.0  --dist-url=https://electronjs.org/headers --target_arch=x64'
             },
             'node-gyp-ia32': {
                 command: 'node-gyp rebuild --arch=ia32'
@@ -75,6 +76,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('release', [
         'build-pre',
-        'upload'
+        //'upload'
     ]);
 };
