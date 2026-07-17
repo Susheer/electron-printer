@@ -1,82 +1,73 @@
-const pkg = require("./package.json");
-const buildMatrix = pkg.buildMatrix.platforms;
-module.exports = function(grunt) {
-    grunt.initConfig({
-        shell: {
-            'node-pre-gyp-ia32': {
-                command: 'node-pre-gyp configure build package --runtime=electron --target=42.7.0  --dist-url=https://electronjs.org/headers --target_arch=ia32'
-            },
-            'node-pre-gyp-x64': {
-                command: 'node-pre-gyp configure build package --runtime=electron --target=42.7.0  --dist-url=https://electronjs.org/headers --target_arch=x64'
-            },
-            'node-gyp-ia32': {
-                command: 'node-gyp rebuild --arch=ia32'
-            },
-            'node-gyp-x64': {
-                command: 'node-gyp rebuild --arch=x64'
-            },
-            'upload-binaries': {
-                command: 'node-pre-gyp-github publish'
-            }
-        },
-        copy: {
-            ia32: {
-                files: [
-                    {src: 'build/Release/electron-printer.node', dest: 'lib/electron-printer-' + process.platform + '-ia32.node'},
-                    {src: 'binding.js', dest: 'lib/binding.js'},
-                    {src: 'index.js', dest: 'lib/index.js'}
-                ]
-            },
-            x64: {
-                files: [
-                    {src: 'build/Release/electron-printer.node', dest: 'lib/electron-printer-' + process.platform + '-x64.node'},
-                    {src: 'binding.js', dest: 'lib/binding.js'},
-                    {src: 'index.js', dest: 'lib/index.js'}
-                ]
-            }
+module.exports = function (grunt) {
+
+    const pkg = require("./package.json");
+
+    const buildMatrix = pkg.buildMatrix.platforms;
+
+    const shell = {};
+    const copy = {};
+
+    const buildTasks = [];
+    const buildPreTasks = [];
+
+    buildMatrix.forEach(platform => {
+        if (platform.os !== process.platform) {
+            return;
         }
+
+        platform.architectures.forEach(arch => {
+            shell[`node-gyp-${arch}`] = {
+                command: `node-gyp rebuild --arch=${arch}`
+            };
+            shell[`node-pre-gyp-${arch}`] = {
+                command: `node-pre-gyp configure build package --target_arch=${arch}`
+            };
+            copy[arch] = {
+                files: [
+                    {
+                        src: "build/Release/electron-printer.node",
+                        dest: `lib/electron-printer-${process.platform}-${arch}.node`
+                    },
+                    {
+                        src: "binding.js",
+                        dest: "lib/binding.js"
+                    },
+                    {
+                        src: "index.js",
+                        dest: "lib/index.js"
+                    }
+                ]
+            };
+            grunt.registerTask(`build-${arch}`, [
+                `shell:node-gyp-${arch}`,
+                `copy:${arch}`
+            ]);
+            grunt.registerTask(`build-pre-${arch}`, [
+                `shell:node-pre-gyp-${arch}`,
+                `copy:${arch}`
+            ]);
+            buildTasks.push(`build-${arch}`);
+            buildPreTasks.push(`build-pre-${arch}`);
+        });
     });
 
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-shell');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-
-    grunt.registerTask('build-pre-ia32', [
-        'shell:node-pre-gyp-ia32',
-        'copy:ia32'
+    shell["upload-binaries"] = {
+        command: "node-pre-gyp-github publish"
+    };
+    grunt.initConfig({
+        shell,
+        copy
+    });
+    grunt.loadNpmTasks("grunt-contrib-jshint");
+    grunt.loadNpmTasks("grunt-shell");
+    grunt.loadNpmTasks("grunt-contrib-copy");
+    grunt.registerTask("build", buildTasks);
+    grunt.registerTask("build-pre", buildPreTasks);
+    grunt.registerTask("upload", [
+        "shell:upload-binaries"
     ]);
-
-    grunt.registerTask('build-ia32', [
-        'shell:node-gyp-ia32',
-        'copy:ia32'
-    ]);
-
-    grunt.registerTask('build-x64', [
-        'shell:node-gyp-x64',
-        'copy:x64'
-    ]);
-
-    grunt.registerTask('build-pre-x64', [
-        'shell:node-pre-gyp-x64',
-        'copy:x64'
-    ]);
-
-    grunt.registerTask('build', [
-        'build-ia32',
-        'build-x64'
-    ]);
-
-    grunt.registerTask('build-pre', [
-        'build-pre-ia32',
-        'build-pre-x64'
-    ]);
-
-    grunt.registerTask('upload', [
-        'shell:upload-binaries'
-    ]);
-
-    grunt.registerTask('release', [
-        'build-pre',
-        //'upload'
+    grunt.registerTask("release", [
+        "build-pre"
+        // "upload"
     ]);
 };

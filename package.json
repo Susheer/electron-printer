@@ -50,7 +50,7 @@
     "README.md",
     "LICENSE"
   ],
-  "buildMatrix": {
+"buildMatrix": {
   "platforms": [
     {
       "os": "win32",
@@ -58,9 +58,23 @@
         "ia32",
         "x64"
       ]
+    },
+    {
+      "os": "linux",
+      "architectures": [
+        "x64",
+        "arm64"
+      ]
+    },
+    {
+      "os": "darwin",
+      "architectures": [
+        "x64",
+        "arm64"
+      ]
     }
-   ]
-  },
+  ]
+},
   "devDependencies": {
     "@mapbox/node-pre-gyp": "^2.0.0",
     "grunt": "^1.6.1",
