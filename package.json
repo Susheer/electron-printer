@@ -2,7 +2,7 @@
   "name": "@thesusheer/electron-printer",
   "description": "Node API (N-API) supported electron.s || node.js printer bindings",
   "homepage": "https://github.com/Susheer/electron-printer",
-  "version": "3.1.0",
+  "version": "4.0.1",
   "main": "./lib/index.js",
   "types": "types/index.d.ts",
   "dependencies": {
@@ -34,10 +34,11 @@
   },
 "binary": {
   "module_name": "electron-printer",
-  "module_path": "./lib/",
+  "module_path": "./lib/{napi_build_version}/{platform}/{arch}",
   "host": "https://github.com/Susheer/electron-printer/releases/download/",
   "remote_path": "v{version}",
-  "tag_path": "https://github.com/Susheer/electron-printer/releases/tag/v{version}"
+  "package_name": "{module_name}-v{version}-napi-v{napi_build_version}-{platform}-{arch}.tar.gz",
+  "napi_versions": [8]
 },
 "licenses": [
     {
